@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package explorer.v1;
+
+import "google/api/annotations.proto";
+import "errors/errors.proto";
+
+option go_package = "explorer/api/explorer/v1;v1";
+
+enum ErrorReason {
+	// 设置缺省错误码
+	option (errors.default_code) = 500;
+
+	// 为某个枚举单独设置错误码
+	USER_NOT_FOUND = 0 [(errors.code) = 404];
+
+	CONTENT_MISSING = 1 [(errors.code) = 400];
+
+	UNKNOWN = 2 ;
+}
+
+service Foo {
+	rpc CreateFoo (CreateFooRequest) returns (CreateFooReply){
+		option(google.api.http) = {
+			get: "/createexplorer/{name}"
+		};
+	};
+	rpc UpdateFoo (UpdateFooRequest) returns (UpdateFooReply);
+	rpc DeleteFoo (DeleteFooRequest) returns (DeleteFooReply);
+	rpc GetFoo (GetFooRequest) returns (GetFooReply);
+	rpc ListFoo (ListFooRequest) returns (ListFooReply);
+}
+
+message CreateFooRequest {
+	string name = 1;
+}
+message CreateFooReply {
+	string msg = 1;
+}
+
+message UpdateFooRequest {}
+message UpdateFooReply {}
+
+message DeleteFooRequest {}
+message DeleteFooReply {}
+
+message GetFooRequest {}
+message GetFooReply {}
+
+message ListFooRequest {}
+message ListFooReply {}
